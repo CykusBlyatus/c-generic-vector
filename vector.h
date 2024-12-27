@@ -43,10 +43,12 @@ void vector_destruct(void *self);
 /**
  * @brief Adds a new element to the end of the vector with the contents at the address 'from'.
  * @param self Pointer to a vector struct.
- * @param from Address of the element to add.
+ * @param val Value
  * @return 0 on success, non-zero otherwise.
  */
-#define vector_push(self,from) vector_push_(self,sizeof(*(self)->at),from)
+#define vector_push(self,val) do {\
+    *((typeof((self)->at)) vector_extend(self)) = (typeof(*(self)->at)) val;\
+} while(0)
 
 /**
  * @brief Makes sure the vector has enough capacity for the given size.
@@ -83,7 +85,8 @@ void vector_clear(void* self);
 
 
 
-// The functions below should not be used and only serve for the actual implementation
+// The functions below may be used, for instance, with function pointers
+// While their respective macros automatically detect the type size, these functions require it as an argument
 
 int vector_init_(void *self, size_t type_size, size_t init_cap);
 void* vector_extend_(void *self, size_t type_size);

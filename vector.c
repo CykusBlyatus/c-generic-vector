@@ -44,16 +44,6 @@ void* vector_extend_(void *self, size_t type_size) {
 }
 
 
-int vector_push_(void *self, size_t type_size, void *from) {
-    aux_vector_t *this = self;
-    if (vector_extend_(self, type_size)) return 1;
-
-    uint8_t *new_element = ((uint8_t*)this->at) + type_size * (this->size - 1);
-    memcpy(new_element, from, type_size);
-    return 0;
-}
-
-
 int vector_reserve_(void *self, size_t type_size, size_t size) {
     aux_vector_t *this = self;
     if (size > this->cap) {
