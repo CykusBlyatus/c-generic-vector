@@ -20,8 +20,11 @@ int main() {
     }
 
     for (size_t i = 0; i < v.size; ++i)
-        printf("%d\n", v.at[i]);
+        printf("%d ", v.at[i]);
+    putchar('\n');
 
     vector_destruct(&v); // always remember to free memory!
     return 0;
 }
+
+// Output: 0 0 1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9

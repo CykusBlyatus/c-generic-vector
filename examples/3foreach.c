@@ -13,9 +13,12 @@ int main() {
     // It takes a pointer to a vector and a name for the pointer that iterates over the vector
     vector_foreach(&v, ptr) {
         *ptr *= 2;
-        printf("%d\n", *ptr);
+        printf("%d ", *ptr);
     }
+    putchar('\n');
 
     vector_destruct(&v); // always remember to free memory!
     return 0;
 }
+
+// Output: 0 2 4 6 8 10 12 14 16 18

@@ -30,3 +30,11 @@ int main() {
     vector_destruct(&vec);
     return 0;
 }
+
+// Output:
+//  0 + 1  = 1
+//  1 + 3  = 4
+//  4 + 6  = 10
+// 10 + 7  = 17
+// 17 + 10 = 27
+// sum = 27
