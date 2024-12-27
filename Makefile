@@ -1,15 +1,18 @@
-PROGRAMS=1simple 2function
+EXAMPLES=$(wildcard examples/*.c)
+PROGRAMS=$(EXAMPLES:examples/%.c=bin/%)
 
 CFLAGS=-Wall -Wextra -Werror -I.
 
 all: $(PROGRAMS)
 	@echo "Programs ready!"
 
-%: examples/%.c vector.h vector.o
-	$(CC) $(CFLAGS) $< vector.o -o $@
+bin/%: examples/%.c vector.h obj/vector.o
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $< obj/vector.o -o $@
 
-vector.o: vector.h vector.c
-	$(CC) -c $(CFLAGS) vector.c -o vector.o
+obj/vector.o: vector.h vector.c
+	@mkdir -p $(dir $@)
+	$(CC) -c $(CFLAGS) vector.c -o $@
 
 clean:
-	rm *.o $(PROGRAMS)
+	rm -r obj/ bin/

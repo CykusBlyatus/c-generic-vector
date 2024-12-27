@@ -1,4 +1,5 @@
 *.o
-1simple
-2function
 .clangd
+obj/
+bin/
+local/

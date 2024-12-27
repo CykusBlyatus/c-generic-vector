@@ -83,6 +83,14 @@ void vector_destruct(void *self);
  */
 void vector_clear(void* self);
 
+/**
+ * @brief Takes a pointer to a vector and a name to give the pointer that will iterate over the vector.
+ * @example Assuming v is a vector of int, these two lines of code are equivalent:
+ *              for (int *ptr = v.at; ptr < v.at + v.size; ++ptr)
+ *              vector_foreach(&v, ptr)
+ * @see examples/3foreach.c
+ */
+#define vector_foreach(self,elem) for(typeof((self)->at) elem = (self)->at; elem < (self)->at + (self)->size; ++elem)
 
 
 // The functions below may be used, for instance, with function pointers
