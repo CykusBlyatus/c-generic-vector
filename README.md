@@ -2,7 +2,7 @@
 This is a fairly simple yet elegant and flexible implementation of dynamic arrays in C. All you really need to know about how it is implemented is this macro:
 
 ```h
-#define vector(T)\
+#define VECTOR(T)\
     struct\
     {\
         T *at;\
@@ -14,11 +14,11 @@ This allows not only the creation of variables that are dynamic arrays, but also
 
 ```c
 // This variable can then be initialized and used
-vector(int) v;
+VECTOR(int) v;
 ```
 
 ```c
-typedef vector(int) int_vector_t;
+typedef VECTOR(int) int_vector_t;
 
 // Every variable declared as an int_vector_t can later be used as an argument to this function
 void print_int_vector(const int_vector_t *v);
