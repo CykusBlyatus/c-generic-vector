@@ -4,14 +4,14 @@
 // This example shows the usage of vector_foreach
 
 int main() {
-    vector(int) v;
-    vector_init(&v);
+    VECTOR(int) v;
+    VECTOR_INIT(&v);
 
     for (int i = 0; i < 10; ++i)
-        vector_push(&v, i);
+        VECTOR_PUSH(&v, i);
 
     // It takes a pointer to a vector and a name for the pointer that iterates over the vector
-    vector_foreach(&v, ptr) {
+    VECTOR_FOREACH(&v, ptr) {
         *ptr *= 2;
         printf("%d ", *ptr);
     }

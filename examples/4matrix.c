@@ -7,21 +7,21 @@
 // which can easily become hard to manage and lead to mistakes.
 
 int main() {
-    vector(vector(int)) m;
-    vector_init(&m);
+    VECTOR(VECTOR(int)) m;
+    VECTOR_INIT(&m);
 
     int n = 10;
-    vector_resize(&m, n); // N uninitialized rows
+    VECTOR_RESIZE(&m, n); // N uninitialized rows
 
-    vector_foreach(&m, row) {
-        vector_init(row); // initialize row
+    VECTOR_FOREACH(&m, row) {
+        VECTOR_INIT(row); // initialize row
         int i = row - m.at; // could have just used a normal for loop
         for (int j = 0; j <= i; ++j)
-            vector_push(row, i - j);
+            VECTOR_PUSH(row, i - j);
     }
 
-    vector_foreach(&m, row) {
-        vector_foreach(row, ptr)
+    VECTOR_FOREACH(&m, row) {
+        VECTOR_FOREACH(row, ptr)
             printf("%-2d ", *ptr);
         putchar('\n');
         vector_destruct(row);

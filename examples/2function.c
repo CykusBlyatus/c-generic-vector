@@ -3,7 +3,7 @@
 
 // This example will show how to use vector types in multiple places, like functions, by simply using typedef
 
-typedef vector(int) int_vector_t; // vector type for holding int values
+typedef VECTOR(int) int_vector_t; // vector type for holding int values
 
 int sum(const int_vector_t *v) {
     int result = 0;
@@ -16,9 +16,9 @@ int sum(const int_vector_t *v) {
 
 int main() {
     int_vector_t vec;
-    vector_init(&vec);
+    VECTOR_INIT(&vec);
 
-    vector_resize(&vec, 5);
+    VECTOR_RESIZE(&vec, 5);
     vec.at[0] = 1;
     vec.at[1] = 3;
     vec.at[2] = 6;
