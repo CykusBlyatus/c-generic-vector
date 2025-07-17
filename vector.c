@@ -9,82 +9,82 @@ typedef VECTOR(void) aux_vector_t;
 /**
  * @brief Calculates the address of an element at index 'idx', for a vector 'self' with elements of size 'type_size'
  */
-#define vector_at__(this, type_size, idx) ((void*)(((uint8_t*)(this)->at) + (type_size) * (idx)))
+#define vector_at__(self, type_size, idx) ((void*)(((uint8_t*)(self)->at) + (type_size) * (idx)))
 
 
-int vector_init(void *self, size_t type_size, size_t init_cap) {
+int vector_init(void *self_, size_t type_size, size_t init_cap) {
     if (init_cap == 0) {
         errno = EINVAL;
         return -1;
     }
 
-    aux_vector_t *this = self;
+    aux_vector_t *self = (aux_vector_t*) (aux_vector_t*) self_;
 
-    this->at = malloc(init_cap * type_size);
-    if (this->at == NULL) return -1;
+    self->at = malloc(init_cap * type_size);
+    if (self->at == NULL) return -1;
 
-    this->cap = init_cap;
-    this->size = 0;
+    self->cap = init_cap;
+    self->size = 0;
     return 0;
 }
 
 
-void vector_destruct(void *self) {
-    if (self == NULL) return;
-    free(((aux_vector_t*) self)->at);
+void vector_destruct(void *self_) {
+    if (self_ == NULL) return;
+    free(((aux_vector_t*) self_)->at);
 }
 
 
-void* vector_extend(void *self, size_t type_size) {
-    aux_vector_t *this = self;
-    if (this->size >= this->cap) {
-        void *tmp = realloc(this->at, 2 * this->cap * type_size);
+void* vector_extend(void *self_, size_t type_size) {
+    aux_vector_t *self = (aux_vector_t*) self_;
+    if (self->size >= self->cap) {
+        void *tmp = realloc(self->at, 2 * self->cap * type_size);
         if (tmp == NULL) return NULL;
-        this->at = tmp;
-        this->cap *= 2;
+        self->at = tmp;
+        self->cap *= 2;
     }
 
-    ++this->size;
-    return vector_at__(this, type_size, this->size - 1);
+    ++self->size;
+    return vector_at__(self, type_size, self->size - 1);
 }
 
 
-int vector_reserve(void *self, size_t type_size, size_t size) {
-    aux_vector_t *this = self;
-    if (size > this->cap) {
-        void *tmp = realloc(this->at, size * type_size);
+int vector_reserve(void *self_, size_t type_size, size_t size) {
+    aux_vector_t *self = (aux_vector_t*) self_;
+    if (size > self->cap) {
+        void *tmp = realloc(self->at, size * type_size);
         if (tmp == NULL) return -1;
-        this->at = tmp;
-        this->cap = size;
+        self->at = tmp;
+        self->cap = size;
     }
     return 0;
 }
 
 
-int vector_resize(void *self, size_t type_size, size_t size) {
-    aux_vector_t *this = self;
-    if (vector_reserve(self,type_size,size))
+int vector_resize(void *self_, size_t type_size, size_t size) {
+    aux_vector_t *self = (aux_vector_t*) self_;
+    if (vector_reserve(self_,type_size,size))
         return -1;
-    this->size = size;
+    self->size = size;
     return 0;
 }
 
 
-int vector_remove(void *self, size_t type_size, size_t idx) {
-    aux_vector_t *this = self;
-    if (idx >= this->size) {
+int vector_remove(void *self_, size_t type_size, size_t idx) {
+    aux_vector_t *self = (aux_vector_t*) self_;
+    if (idx >= self->size) {
         errno = EINVAL;
         return -1;
     }
 
-    uint8_t *dest = vector_at__(this,type_size,idx);
+    uint8_t *dest = (uint8_t*) vector_at__(self,type_size,idx);
     uint8_t *src = dest + type_size;
-    memmove(dest, src, type_size * (this->size - idx - 1));
-    --this->size;
+    memmove(dest, src, type_size * (self->size - idx - 1));
+    --self->size;
     return 0;
 }
 
 
-void vector_clear(void* self) {
-    ((aux_vector_t*)self)->size = 0;
+void vector_clear(void* self_) {
+    ((aux_vector_t*)self_)->size = 0;
 }
