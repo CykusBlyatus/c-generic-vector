@@ -47,7 +47,7 @@ void vector_destruct(void *self);
  * @return 0 on success, non-zero otherwise.
  */
 #define vector_push(self,val) do {\
-    *((typeof((self)->at)) vector_extend(self)) = (typeof(*(self)->at)) (val);\
+    *((typeof((self)->at)) vector_extend(self)) = val;\
 } while(0)
 
 /**
