@@ -47,9 +47,19 @@ void vector_destruct(void *self);
  * @param val Value
  * @return 0 on success, non-zero otherwise.
  */
-#define VECTOR_PUSH(self,val) do {\
-    *((typeof((self)->at)) VECTOR_EXTEND(self)) = val;\
-} while(0)
+#define VECTOR_PUSH(self,val) ({\
+    typeof((self)->at) __c_generic_vector_temp = VECTOR_EXTEND(self);\
+    if (__c_generic_vector_temp)\
+        *__c_generic_vector_temp=val;\
+    __c_generic_vector_temp==NULL;\
+})
+
+// Alternative if your compiler does not support statement expressions
+#define VECTOR_PUSH_NO_STMT_EXPR(self,val) do {\
+    typeof((self)->at) __c_generic_vector_temp = VECTOR_EXTEND(self);\
+    if (__c_generic_vector_temp)\
+        *__c_generic_vector_temp=val;\
+\} while(0)
 
 /**
  * @brief Makes sure the vector has enough capacity for the given size.

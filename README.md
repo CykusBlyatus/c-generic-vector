@@ -25,3 +25,8 @@ void print_int_vector(const int_vector_t *v);
 ```
 
 More detailed usage of this vector implementation can be found in the `examples/` directory.
+
+## Note
+`vector.h` uses non-standard C features (some compilers do not support them):
+- The `VECTOR_PUSH` macro uses a [statement expression](https://gcc.gnu.org/onlinedocs/gcc/Statement-Exprs.html) to return a result. Alternatives include using `VECTOR_PUSH_NO_STMT_EXPR` or `VECTOR_EXTEND`, but the former leads to more verbose error checking and the latter leads to overall more verbose code
+- (If you are using a standard before C23) `VECTOR_PUSH` and `VECTOR_FOREACH` need `typeof` to work
